@@ -26,14 +26,14 @@ router.route("/")
 
 router.param("userId", async (req, res, next, id) => {
     try {
-        const User = await User.findById(id).populate({
+        const user = await User.findById(id).populate({
             path: "scoreboard",
             model: "Score"
         })
         if(!User){
             res.status(400).json({ success: false, message: "error getting user data" })
         }
-        req.user = User,
+        req.user = user,
         next()
     } catch (error) {
         res.status(400).json({ success: false, message: "error getting user data", errorMessage: error.message })
