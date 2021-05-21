@@ -16,12 +16,14 @@ app.use(cors())
 const userRouter  = require("./routes/user.route")
 const scoreRouter  = require("./routes/score.route")
 const authRouter  = require("./routes/auth.route")
+const questionRouter = require("./routes/question.route")
 const { errorHandler } = require("./middlewares/errorHandler.middleware");
 const { routeNotFound } = require("./middlewares/routeNotFound.middleware");
 
 app.use("/api/user", userRouter);
 app.use("/api/score", scoreRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/question", questionRouter)
 
 app.get("/", (req, res) => {
     res.send("Hello world")
