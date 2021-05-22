@@ -8,7 +8,7 @@ router.route("/")
         const { username, password } = req.body
         const user = await User.find({ username })
         if(user[0].password === password){
-            res.status(200).json({ success: true, message: "Login successfull" })
+            res.status(200).json({ success: true, message: "Login successfull", user: user[0] })
         }else{
             res.status(403).json({ success: false, message: "Unauthorized user" })
         }
