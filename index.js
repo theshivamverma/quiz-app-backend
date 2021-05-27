@@ -20,6 +20,7 @@ const questionRouter = require("./routes/question.route")
 const { errorHandler } = require("./middlewares/errorHandler.middleware");
 const { routeNotFound } = require("./middlewares/routeNotFound.middleware");
 
+
 app.use("/api/user", userRouter);
 app.use("/api/score", scoreRouter);
 app.use("/api/auth", authRouter);
