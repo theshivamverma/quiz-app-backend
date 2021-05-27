@@ -1,31 +1,33 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/user.model");
+require("dotenv").config();
 
-const SECRET = process.env.SECRET || "shhhhhh";
+const SECRET = process.env.SECRET || 'shhhhhh';
 
 async function loginUser(req, res){
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
-
+    console.log("called")
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     user.password = undefined;
 
     if (isPasswordValid) {
+    console.log("called inside");
       const token = jwt.sign(
-        { userId: user._id, SECRET },
+        { userId: user._id},SECRET,
         { expiresIn: "24h" }
       );
       res
         .status(200)
         .json({ success: true, message: "Login successfull", user, token });
     } else {
-      res.status(401).json({ success: false, message: "Unauthorized user" });
+      res.status(401).json({ success: false, message: "Unauthorized", errorMessage: error.message });
     }
   } catch (error) {
-    res.status(401).json({ success: false, message: "Unauthorized user" });
+    res.status(401).json({ success: false, message: "Unauthorized user", errorMessage: error.message });
   }
 };
 
