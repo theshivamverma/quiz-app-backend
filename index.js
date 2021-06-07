@@ -31,6 +31,8 @@ app.all("*", function (req, res, next) {
   next();
 });
 
+app.set("trust proxy", 1);
+
 app.use("/api/user", userRouter);
 app.use("/api/score", scoreRouter);
 app.use("/api/auth", authRouter);
