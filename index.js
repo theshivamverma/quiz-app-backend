@@ -12,7 +12,7 @@ const { initializeDBConnection } = require("./db/db.config");
 initializeDBConnection();
 
 app.use(bodyParser.json());
-app.use(cors({ credentials: true }));
+app.use(cors({ credentials: true, origin: "https://quizviz.netlify.app" }));
 app.use(cookieParser());
 
 const userRouter = require("./routes/user.route");
