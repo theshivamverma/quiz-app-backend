@@ -1,30 +1,19 @@
 const { User } = require("../models/user.model");
 
-async function getAllUsernames(req, res) {
-  try {
-    const UsersData = await User.find({}).select("username -_id");
-    res.status(200).json({ success: true, UsersData });
-  } catch (error) {
-    res.status(400).json({
-      success: false,
-      errorMessage: error.message,
-      message: "Error fetching users data",
-    });
-  }
-}
-
-async function getUserFromParam (req, res, next, id) {
+async function getUserDataFromDB (req, res, next) {
    try {
+     const id = req.userId
      const user = await User.findById(id).populate({
        path: "scoreboard",
        model: "Score",
      });
-     if (!User) {
+     if (!user) {
        res
          .status(400)
          .json({ success: false, message: "error getting user data" });
      }
-     (req.user = user), next();
+     req.user = user;
+     next();
    } catch (error) {
      res
        .status(400)
@@ -57,4 +46,4 @@ async function addScoreToUser(req, res){
   }
 };
 
-module.exports = { getAllUsernames, getUserFromParam, getUserById, addScoreToUser }
+module.exports = { getUserDataFromDB, getUserById, addScoreToUser }

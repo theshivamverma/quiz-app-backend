@@ -1,6 +1,7 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
+const cookieParser = require("cookie-parser")
 require("dotenv").config()
 const app = express();
 
@@ -11,7 +12,8 @@ const { initializeDBConnection } = require("./db/db.config")
 initializeDBConnection();
 
 app.use(bodyParser.json())
-app.use(cors())
+app.use(cors({ credentials: true, origin: "localhost:3000" }));
+app.use(cookieParser())
 
 const userRouter  = require("./routes/user.route")
 const scoreRouter  = require("./routes/score.route")

@@ -5,7 +5,7 @@ async function getAllScore(req, res){
     const scoresData = await Score.find({}).populate({
       path: "user",
       model: "User",
-      select: "username",
+      select: "username-_id",
     });
     res.status(200).json({ success: true, scoresData });
   } catch (error) {

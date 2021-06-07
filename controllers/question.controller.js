@@ -1,4 +1,4 @@
-const { Question } = require("../models/queston.model");
+const { Question } = require("../models/question.model");
 
 async function getAllQuestions(req, res){
   try {

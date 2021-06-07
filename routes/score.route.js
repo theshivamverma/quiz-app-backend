@@ -7,8 +7,6 @@ const { isAuthenticated } = require("../middlewares/isAuthenticated.middleware")
 
 router.route("/")
 .get(getAllScore)
-
-router.use(isAuthenticated)
-.post(addNewScore)
+.post(isAuthenticated, addNewScore)
 
 module.exports = router

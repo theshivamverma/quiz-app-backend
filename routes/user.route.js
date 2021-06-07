@@ -3,22 +3,17 @@ const express = require("express");
 const router = express.Router();
 
 const {
-  getAllUsernames,
-  getUserFromParam,
+  getUserDataFromDB,
   getUserById,
   addScoreToUser,
 } = require("../controllers/user.controller");
 
 const { isAuthenticated } = require("../middlewares/isAuthenticated.middleware");
 
-router.route("/").get(getAllUsernames);
+router.use(isAuthenticated);
 
-router.use(isAuthenticated)
+router.get("/userdetail", getUserDataFromDB, getUserById);
 
-router.param("userId", getUserFromParam);
-
-router.route("/:userId").get(getUserById);
-
-router.route("/:userId/add-new-score").post(addScoreToUser);
+router.post("/add-new-score", getUserDataFromDB, addScoreToUser);
 
 module.exports = router;
