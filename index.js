@@ -14,14 +14,12 @@ const { routeNotFound } = require("./middlewares/routeNotFound.middleware");
 
 const PORT = process.env.PORT || 8000;
 
-const appURL = process.env.APP_URL || "http://localhost:3000"
-
 const { initializeDBConnection } = require("./db/db.config");
 
 initializeDBConnection();
 
 app.use(bodyParser.json());
-app.use(cors({ credentials: true, origin: appURL, metods: "GET, POST" }));
+app.use(cors());
 app.use(cookieParser());
 
 app.set("trust proxy", 1);
