@@ -14,7 +14,7 @@ const { routeNotFound } = require("./middlewares/routeNotFound.middleware");
 
 const PORT = process.env.PORT || 8000;
 
-const appURL = "https://quizviz.netlify.app/";
+const appURL = process.env.APP_URL || "http://localhost:3000"
 
 const { initializeDBConnection } = require("./db/db.config");
 
@@ -23,13 +23,6 @@ initializeDBConnection();
 app.use(bodyParser.json());
 app.use(cors({ credentials: true, origin: appURL, metods: "GET, POST" }));
 app.use(cookieParser());
-
-app.all("*", function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", appURL);
-  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
 
 app.set("trust proxy", 1);
 

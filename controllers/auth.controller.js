@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../models/user.model");
 require("dotenv").config();
 
-const SECRET = process.env.SECRET || "shhhhhh";
+const SECRET = process.env.SECRET;
 
 async function loginUser(req, res) {
   try {
@@ -17,13 +17,9 @@ async function loginUser(req, res) {
       const token = jwt.sign({ userId: user._id }, SECRET, {
         expiresIn: "24h",
       });
-      res.cookie("token", token, {
-        expires: new Date(Date.now() + 999999999),
-        httpOnly: true,
-      });
       res
         .status(200)
-        .json({ success: true, message: "Login successfull", user });
+        .json({ success: true, message: "Login successfull", user, token });
     } else {
       res
         .status(401)
@@ -54,14 +50,10 @@ async function signupUser(req, res) {
     savedUser.password = undefined;
 
     const token = jwt.sign({ userId: savedUser._id }, SECRET, { expiresIn: "24h" });
-    res.cookie("token", token, {
-      expires: new Date(Date.now() + 999999999),
-      httpOnly: true,
-    });
 
     res
       .status(200)
-      .json({ success: true, savedUser, message: "Signup successfull" });
+      .json({ success: true, savedUser, message: "Signup successfull", token });
   } catch (error) {
     res.status(400).json({
       success: false,
@@ -74,10 +66,6 @@ async function signupUser(req, res) {
 function logoutUser(req, res) {
   res.clearCookie("token");
   res.status(200).json({ success: true, message: "Logout successful" });
-}
-
-function userIsLoggedIn(req, res) {
-  res.status(200).json({ success: false, message: "Authorized user" });
 }
 
 async function checkUsernameValidity(req, res) {
@@ -98,6 +86,5 @@ module.exports = {
   loginUser,
   signupUser,
   logoutUser,
-  userIsLoggedIn,
   checkUsernameValidity,
 };
