@@ -26,7 +26,6 @@ async function loginUser(req, res) {
         .json({
           success: false,
           message: "Unauthorized",
-          errorMessage: error.message,
         });
     }
   } catch (error) {
@@ -63,11 +62,6 @@ async function signupUser(req, res) {
   }
 }
 
-function logoutUser(req, res) {
-  res.clearCookie("token");
-  res.status(200).json({ success: true, message: "Logout successful" });
-}
-
 async function checkUsernameValidity(req, res) {
   try {
     const { username } = req.body;
@@ -85,6 +79,5 @@ async function checkUsernameValidity(req, res) {
 module.exports = {
   loginUser,
   signupUser,
-  logoutUser,
   checkUsernameValidity,
 };
